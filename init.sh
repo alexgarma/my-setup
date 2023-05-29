@@ -41,7 +41,53 @@ detect_package_manager() {
     fi
 }
 
+# Function to install applications using Homebrew
+install_with_homebrew() {
+    echo "Installing applications with Homebrew..."
+    brew install app1
+    brew install app2
+    brew install app3
+}
+
+# Function to install applications using apt-get
+install_with_apt_get() {
+    echo "Installing applications with apt-get..."
+    sudo apt-get update
+    sudo apt-get install -y app1
+    sudo apt-get install -y app2
+    sudo apt-get install -y app3
+}
+
+# Function to install applications using DNF
+install_with_dnf() {
+    echo "Installing applications with DNF..."
+    sudo dnf update
+    echo "Installing python3..."
+    sudo dnf install -y python3
+}
+
+# Function to install applications using the detected package manager
+install_applications() {
+    local package_manager=$1
+
+    case $package_manager in
+        "Homebrew")
+            install_with_homebrew
+            ;;
+        "apt-get")
+            install_with_apt_get
+            ;;
+        "DNF")
+            install_with_dnf
+            ;;
+        *)
+            echo "Package manager not supported for application installation"
+            ;;
+    esac
+}
+
 # Assign package manager detector to a variable
 package_manager=$(detect_package_manager)
 
-echo "Package manager: $package_manager"
+# Install applications based on the detected package manager
+install_applications "$package_manager"
