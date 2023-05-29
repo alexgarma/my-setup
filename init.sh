@@ -77,7 +77,7 @@ install_applications() {
         "apt-get")
             install_with_apt_get
             ;;
-        "DNF")
+        "dnf")
             install_with_dnf
             ;;
         *)
