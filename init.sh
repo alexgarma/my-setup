@@ -67,10 +67,24 @@ install_with_apt_get() {
 
 # Function to install applications using DNF
 install_with_dnf() {
+    
+    # Update dependencies
     echo "Installing applications with DNF..."
+    echo "Updating dependencies..."
     sudo dnf update
+
+    # Python
     echo "Installing python3..."
     sudo dnf install -y python3
+
+    # Git
+    echo "Installing git..."
+    sudo dnf install git
+
+    # Zsh
+    echo "Installing zsh..."
+    sudo dnf install zsh
+
 }
 
 # Function to install applications using the detected package manager
