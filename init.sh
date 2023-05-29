@@ -22,7 +22,7 @@ detect_package_manager() {
         elif [[ -x "$(command -v dnf)" ]]; then
             echo "Detected Fedora-based Linux"
             echo "Package manager: DNF"
-            return "dnf"
+            return 0
         elif [[ -x "$(command -v yum)" ]]; then
             echo "Detected CentOS/RHEL-based Linux"
             echo "Package manager: YUM"
@@ -70,8 +70,6 @@ install_with_dnf() {
 install_applications() {
     local package_manager=$1
 
-    echo $package_manager
-
     case $package_manager in
         "Homebrew")
             install_with_homebrew
@@ -79,7 +77,7 @@ install_applications() {
         "apt-get")
             install_with_apt_get
             ;;
-        "dnf")
+        "DNF")
             install_with_dnf
             ;;
         *)
@@ -93,4 +91,4 @@ package_manager=$(detect_package_manager)
 
 echo "Package manager: $package_manager"
 # Install applications based on the detected package manager
-install_applications "$package_manager"
+install_applications "${package_manager##*:}"
