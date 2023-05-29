@@ -22,7 +22,7 @@ detect_package_manager() {
         elif [[ -x "$(command -v dnf)" ]]; then
             echo "Detected Fedora-based Linux"
             echo "Package manager: DNF"
-            return 0
+            return "dnf"
         elif [[ -x "$(command -v yum)" ]]; then
             echo "Detected CentOS/RHEL-based Linux"
             echo "Package manager: YUM"
