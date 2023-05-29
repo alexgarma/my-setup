@@ -84,10 +84,13 @@ install_with_dnf() {
     # Zsh
     echo "Installing zsh..."
     sudo dnf install zsh
+    chsh -s $(which zsh)
+    
+    echo "The default shell is: $SHELL"
 
     # Oh my zsh
     echo "Installing oh-my-zsh..."
-    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 }
 
