@@ -91,6 +91,6 @@ install_applications() {
 # Assign package manager detector to a variable
 package_manager=$(detect_package_manager)
 
-echo "Package manager: $package_manager"
+package_manager=$(trim "${package_manager##*:}")
 # Install applications based on the detected package manager
-install_applications "${package_manager##*:}"
+install_applications "$package_manager"
