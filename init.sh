@@ -41,6 +41,13 @@ detect_package_manager() {
     fi
 }
 
+# Function to trim leading and trailing spaces from a string
+trim() {
+    local var=$1
+    var=$(echo "$var" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    echo -n "$var"
+}
+
 # Function to install applications using Homebrew
 install_with_homebrew() {
     echo "Installing applications with Homebrew..."
@@ -91,6 +98,8 @@ install_applications() {
 # Assign package manager detector to a variable
 package_manager=$(detect_package_manager)
 
+# Trim leading and trailing spaces from the package manager value
 package_manager=$(trim "${package_manager##*:}")
+
 # Install applications based on the detected package manager
 install_applications "$package_manager"
