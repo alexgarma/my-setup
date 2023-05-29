@@ -81,11 +81,14 @@ install_with_dnf() {
     echo "Installing git..."
     sudo dnf install git
 
+    # Utils util-linux-user (only needed to change shell in Fedora an other distros)
+    sudo dnf install util-linux-user
+
     # Zsh
     echo "Installing zsh..."
     sudo dnf install zsh
-    chsh -s $(which zsh)
-    
+    sudo chsh -s $(which zsh) $(whoami) 
+
     echo "The default shell is: $SHELL"
 
     # Oh my zsh
