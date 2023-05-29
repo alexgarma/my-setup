@@ -103,9 +103,20 @@ install_with_dnf() {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Neovim
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-    chmod u+x nvim.appimage
-    ./nvim.appimage
+    # Download and install NeoVim if not already present
+    if ! command -v nvim &>/dev/null; then
+        echo "NeoVim not found. Downloading and installing..."
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        chmod u+x nvim.appimage
+        ./nvim.appimage
+    fi
+    
+    # Check if NeoVim is installed successfully
+    if ! command -v nvim &>/dev/null; then
+        echo "NeoVim installation failed. Extracting and running the app image..."
+        ./nvim.appimage --appimage-extract
+        ./squashfs-root/AppRun --version
+    fi
 
 }
 
