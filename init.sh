@@ -77,6 +77,12 @@ install_with_dnf() {
     echo "Installing python3..."
     sudo dnf install -y python3
 
+    # Pip
+    # TODO: Add comands to install pip
+
+    # SSH
+    # TODO: Add commands to instal ssh and activate/evaluate
+
     # Git
     echo "Installing git..."
     sudo dnf install git
@@ -87,6 +93,7 @@ install_with_dnf() {
     # Zsh
     echo "Installing zsh..."
     sudo dnf install zsh
+    # Make defaul shell (default user)
     sudo chsh -s $(which zsh) $(whoami) 
 
     echo "The default shell is: $SHELL"
@@ -94,6 +101,11 @@ install_with_dnf() {
     # Oh my zsh
     echo "Installing oh-my-zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    # Neovim
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    ./nvim.appimage
 
 }
 
