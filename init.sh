@@ -70,6 +70,8 @@ install_with_dnf() {
 install_applications() {
     local package_manager=$1
 
+    echo $package_manager
+
     case $package_manager in
         "Homebrew")
             install_with_homebrew
