@@ -85,6 +85,10 @@ install_with_dnf() {
     echo "Installing zsh..."
     sudo dnf install zsh
 
+    # Oh my zsh
+    echo "Installing oh-my-zsh..."
+    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 }
 
 # Function to install applications using the detected package manager
