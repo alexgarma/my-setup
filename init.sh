@@ -51,18 +51,18 @@ trim() {
 # Function to install applications using Homebrew
 install_with_homebrew() {
     echo "Installing applications with Homebrew..."
-    brew install app1
-    brew install app2
-    brew install app3
+    # brew install app1
+    # brew install app2
+    # brew install app3
 }
 
 # Function to install applications using apt-get
 install_with_apt_get() {
     echo "Installing applications with apt-get..."
-    sudo apt-get update
-    sudo apt-get install -y app1
-    sudo apt-get install -y app2
-    sudo apt-get install -y app3
+    # sudo apt-get update
+    # sudo apt-get install -y app1
+    # sudo apt-get install -y app2
+    # sudo apt-get install -y app3
 }
 
 # Function to install applications using DNF
@@ -73,22 +73,33 @@ install_with_dnf() {
     echo "Updating dependencies..."
     sudo dnf update
 
-    # Python
-    echo "Installing python3..."
-    sudo dnf install -y python3
+    # Install python3
+    if ! command -v python3 &>/dev/null; then
+        echo "Python3 not found. Installing..."
+        sudo dnf install -y python3
+    fi
 
-    # Pip
-    # TODO: Add comands to install pip
+    # Install pip3
+    if ! command -v pip3 &>/dev/null; then
+        echo "Pip3 not found. Installing..."
+        sudo dnf install -y python3-pip
+    fi
 
-    # SSH
-    # TODO: Add commands to instal ssh and activate/evaluate
+    # Install SSH
+    if ! command -v ssh &>/dev/null; then
+        echo "SSH not found. Installing..."
+        sudo dnf install -y openssh
+    fi
+    # TODO: Add commands to activate ssh
 
-    # Git
-    echo "Installing git..."
-    sudo dnf install git
+    # Validate if git is installed
+    if ! command -v git &>/dev/null; then
+        echo "Git not found. Installing..."
+        sudo dnf install -y git
+    fi
 
     # Utils util-linux-user (only needed to change shell in Fedora an other distros)
-    sudo dnf install util-linux-user
+    # sudo dnf install util-linux-user
 
     # Zsh
     echo "Installing zsh..."
@@ -118,8 +129,8 @@ install_with_dnf() {
     #    ./nvim.appimage --appimage-extract
     #    ./squashfs-root/AppRun --version
     #fi
+    ## TODO: Make neovim the default editor
     
-    sudo dnf install -y neovim python3-neovim
 }
 
 # Function to install applications using the detected package manager
