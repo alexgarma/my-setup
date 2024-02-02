@@ -98,8 +98,8 @@ install_with_dnf() {
         sudo dnf install -y git
     fi
 
-    # Utils util-linux-user (only needed to change shell in Fedora an other distros)
-    # sudo dnf install util-linux-user
+    # Utils util-linux-user (is only needed to change default shell in Fedora an other distros)
+    sudo dnf install util-linux-user
 
     # Zsh
     echo "Installing zsh..."
@@ -112,6 +112,10 @@ install_with_dnf() {
     # Oh my zsh
     echo "Installing oh-my-zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    # Personalize Oh my zsh
+    echo "Personalizing oh-my-zsh..."
+
 
     # Neovim
 
