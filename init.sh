@@ -149,6 +149,10 @@ install_with_dnf() {
         sudo dnf install -y tmux
     fi
 
+    # Tmux configuration
+    echo "Personalizing tmux..."
+
+
     # Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim not found. Downloading and installing..."
