@@ -73,6 +73,12 @@ install_with_dnf() {
     echo "Updating dependencies..."
     sudo dnf update
 
+    # Validate if git is installed
+    if ! command -v git &>/dev/null; then
+        echo "Git not found. Installing..."
+        sudo dnf install -y git
+    fi
+
     # Install python3
     if ! command -v python3 &>/dev/null; then
         echo "Python3 not found. Installing..."
@@ -85,48 +91,72 @@ install_with_dnf() {
         sudo dnf install -y python3-pip
     fi
 
+    # Install awscli
+    if ! command -v aws &>/dev/null; then
+        echo "AWS CLI not found. Installing..."
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+    fi
+
     # Install SSH
     if ! command -v ssh &>/dev/null; then
         echo "SSH not found. Installing..."
         sudo dnf install -y openssh
     fi
-    # TODO: Add commands to activate ssh
+    # TODO: Add ssh-agent
 
-    # Validate if git is installed
-    if ! command -v git &>/dev/null; then
-        echo "Git not found. Installing..."
-        sudo dnf install -y git
+    # Utils util-linux-user (is only needed to change default shell in some distros)
+    if ! command -v chsh &>/dev/null; then
+        echo "Chsh not found. Installing..."
+        sudo dnf install util-linux-user
     fi
 
-    # Utils util-linux-user (is only needed to change default shell in Fedora an other distros)
-    sudo dnf install util-linux-user
+    # Install Zsh if not already present
+    if ! command -v zsh &>/dev/null; then
+        echo "Zsh not found. Installing..."
+        sudo dnf install -y zsh
+    fi
 
-    # Zsh
-    echo "Installing zsh..."
-    sudo dnf install zsh
-    # Make defaul shell (default user)
-    sudo chsh -s $(which zsh) $(whoami) 
+    # Make Zsh defaul shell (default user)
+    sudo chsh -s $(which zsh) $(whoami)
+
+    source ~/.zshrc
 
     echo "The default shell is: $SHELL"
 
-    # Oh my zsh
-    echo "Installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # Install Oh my zsh if not already present
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+        echo "Installing oh-my-zsh..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
+
+    # Install fzf if not already present
+    if ! command -v fzf &>/dev/null; then
+        echo "Fzf not found. Installing..."
+        sudo dnf install -y fzf
+    fi
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
+    
+    cp dotfiles/.zshrc ~/.zshrc
+    source ~/.zshrc
 
+    # Install tmux if not already present
+    if ! command -v tmux &>/dev/null; then
+        echo "Tmux not found. Installing..."
+        sudo dnf install -y tmux
+    fi
 
-    # Neovim
-
-    # Download and install NeoVim if not already present
+    # Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim not found. Downloading and installing..."
     #    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
     #    chmod u+x nvim.appimage
     #    ./nvim.appimage
     #fi
-    #
+    
     ## Check if NeoVim is installed successfully
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim installation failed. Extracting and running the app image..."
