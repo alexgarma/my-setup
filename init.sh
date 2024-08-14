@@ -136,11 +136,14 @@ install_with_dnf() {
         echo "Fzf not found. Installing..."
         sudo dnf install -y fzf
     fi
+    
+    source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
     
     cp dotfiles/.zshrc ~/.zshrc
+    
     source ~/.zshrc
 
     # Install tmux if not already present
@@ -148,7 +151,9 @@ install_with_dnf() {
         echo "Tmux not found. Installing..."
         sudo dnf install -y tmux
     fi
-
+    
+    source ~/.zshrc
+    
     # Tmux configuration
     echo "Personalizing tmux..."
     
