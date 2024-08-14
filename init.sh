@@ -128,7 +128,7 @@ install_with_dnf() {
         sudo dnf install -y zsh
     fi
 
-    # Make Zsh defaul shell (default user)
+    # Make Zsh default shell (default user)
     sudo chsh -s $(which zsh) $(whoami)
 
     source ~/.zshrc
@@ -146,15 +146,21 @@ install_with_dnf() {
         echo "Fzf not found. Installing..."
         sudo dnf install -y fzf
     fi
+
+    # Check if fzf is installed successfully
+    if ! command -v fzf &>/dev/null; then
+        echo "Fzf installation failed. Cloning the repository..."
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install
     
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
     
     cp dotfiles/.zshrc ~/.zshrc
     
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
@@ -162,7 +168,7 @@ install_with_dnf() {
         sudo dnf install -y tmux
     fi
     
-    source ~/.zshrc
+    #source ~/.zshrc
     
     # Tmux configuration
     echo "Personalizing tmux..."

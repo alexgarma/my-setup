@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_DISABLE_COMPFIX="true"
+
+
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -84,11 +87,8 @@ plugins=(
     zsh-interactive-cd
 )
 
-zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
-zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
-zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
-zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
-zstyle ':omz:plugins:alias-finder' verbose yes # disabled by default
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 source $ZSH/oh-my-zsh.sh
 
