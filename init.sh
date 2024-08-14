@@ -172,24 +172,27 @@ install_with_dnf() {
     ln -s -f .tmux/.tmux.conf
     cp .tmux/.tmux.conf.local .
 
-    # TODO: Install NeoVim
-    # Install NeoVim if not already present
+
+    ## Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim not found. Downloading and installing..."
     #    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
     #    chmod u+x nvim.appimage
     #    ./nvim.appimage
     #fi
-    
+    #
     ## Check if NeoVim is installed successfully
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim installation failed. Extracting and running the app image..."
     #    ./nvim.appimage --appimage-extract
     #    ./squashfs-root/AppRun --version
     #fi
-    ## TODO: Make neovim the default editor
     
+    # TODO: Make neovim the default editor
+
 }
+    
+
 
 # Function to install applications using YUM
 install_with_yum() {
@@ -289,23 +292,22 @@ install_with_yum() {
     ln -s -f .tmux/.tmux.conf
     cp .tmux/.tmux.conf.local .
 
-    # TODO: Install NeoVim
-    # Install NeoVim if not already present
+    ## Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim not found. Downloading and installing..."
     #    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
     #    chmod u+x nvim.appimage
     #    ./nvim.appimage
     #fi
-    
+    #
     ## Check if NeoVim is installed successfully
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim installation failed. Extracting and running the app image..."
     #    ./nvim.appimage --appimage-extract
     #    ./squashfs-root/AppRun --version
     #fi
-    ## TODO: Make neovim the default editor
-
+    
+    # TODO: Make neovim the default editor
 }
 
 
