@@ -153,14 +153,14 @@ install_with_dnf() {
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
         ~/.fzf/install
     
-    #source ~/.zshrc
+    source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
     
     cp dotfiles/.zshrc ~/.zshrc
     
-    #source ~/.zshrc
+    source ~/.zshrc
 
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
@@ -168,7 +168,7 @@ install_with_dnf() {
         sudo dnf install -y tmux
     fi
     
-    #source ~/.zshrc
+    source ~/.zshrc
     
     # Tmux configuration
     echo "Personalizing tmux..."
@@ -273,14 +273,20 @@ install_with_yum() {
         sudo yum install -y fzf
     fi
 
-    source ~/.zshrc
+    # Check if fzf is installed successfully
+    if ! command -v fzf &>/dev/null; then
+        echo "Fzf installation failed. Cloning the repository..."
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install
+    
+    #source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
 
     cp dotfiles/.zshrc ~/.zshrc
 
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
@@ -288,7 +294,7 @@ install_with_yum() {
         sudo yum install -y tmux
     fi
 
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Tmux configuration
     echo "Personalizing tmux..."
