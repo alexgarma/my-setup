@@ -147,11 +147,11 @@ install_with_dnf() {
         sudo dnf install -y fzf
     fi
 
-    # Check if fzf is installed successfully
-    if ! command -v fzf &>/dev/null; then
-        echo "Fzf installation failed. Cloning the repository..."
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        sh ~/.fzf/install
+    ## Check if fzf is installed successfully
+    #if ! command -v fzf &>/dev/null; then
+    #    echo "Fzf installation failed. Cloning the repository..."
+    #    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    #    sh ~/.fzf/install
     
     source ~/.zshrc
 
@@ -273,11 +273,11 @@ install_with_yum() {
         sudo yum install -y fzf
     fi
 
-    # Check if fzf is installed successfully
-    if ! command -v fzf &>/dev/null; then
-        echo "Fzf installation failed. Cloning the repository..."
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        sh ~/.fzf/install
+    ## Check if fzf is installed successfully
+    #if ! command -v fzf &>/dev/null; then
+    #    echo "Fzf installation failed. Cloning the repository..."
+    #    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    #    sh ~/.fzf/install
     
     #source ~/.zshrc
 
