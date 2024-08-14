@@ -147,13 +147,7 @@ install_with_dnf() {
         sudo dnf install -y fzf
     fi
 
-    # Check if fzf is installed successfully
-    if ! command -v fzf &>/dev/null; then
-        echo "Fzf installation failed. Cloning the repository..."
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        ~/.fzf/install
-    
-    source ~/.zshrc
+
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
@@ -273,13 +267,6 @@ install_with_yum() {
         sudo yum install -y fzf
     fi
 
-    # Check if fzf is installed successfully
-    if ! command -v fzf &>/dev/null; then
-        echo "Fzf installation failed. Cloning the repository..."
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        ~/.fzf/install
-    
-    #source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
