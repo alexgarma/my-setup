@@ -172,6 +172,8 @@ install_with_dnf() {
     ln -s -f .tmux/.tmux.conf
     cp .tmux/.tmux.conf.local .
 
+    #TODO: Install anaconda
+
     ## Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
     #    echo "NeoVim not found. Downloading and installing..."
@@ -273,6 +275,8 @@ install_with_yum() {
     cp dotfiles/.zshrc ~/.zshrc
 
     #source ~/.zshrc
+
+    #TODO: Install anaconda
 
     #TODO: Add tmux installation using git clone
     # Install tmux if not already present
