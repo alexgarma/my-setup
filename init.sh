@@ -284,12 +284,12 @@ install_with_yum() {
     #source ~/.zshrc
 
     # Tmux configuration
-    echo "Personalizing tmux..."
+    #echo "Personalizing tmux..."
 
-    cd ~
-    git clone https://github.com/gpakosz/.tmux.git
-    ln -s -f .tmux/.tmux.conf
-    cp .tmux/.tmux.conf.local .
+    #cd ~
+    #git clone https://github.com/gpakosz/.tmux.git
+    #ln -s -f .tmux/.tmux.conf
+    #cp .tmux/.tmux.conf.local .
 
     ## Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
