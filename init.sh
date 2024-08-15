@@ -147,20 +147,14 @@ install_with_dnf() {
         sudo dnf install -y fzf
     fi
 
-    ## Check if fzf is installed successfully
-    #if ! command -v fzf &>/dev/null; then
-    #    echo "Fzf installation failed. Cloning the repository..."
-    #    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    #    sh ~/.fzf/install
-    
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
     
     cp dotfiles/.zshrc ~/.zshrc
     
-    source ~/.zshrc
+    #source ~/.zshrc
 
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
@@ -168,7 +162,7 @@ install_with_dnf() {
         sudo dnf install -y tmux
     fi
     
-    source ~/.zshrc
+    #source ~/.zshrc
     
     # Tmux configuration
     echo "Personalizing tmux..."
@@ -177,7 +171,6 @@ install_with_dnf() {
     git clone https://github.com/gpakosz/.tmux.git
     ln -s -f .tmux/.tmux.conf
     cp .tmux/.tmux.conf.local .
-
 
     ## Install NeoVim if not already present
     #if ! command -v nvim &>/dev/null; then
@@ -270,16 +263,9 @@ install_with_yum() {
     # Install fzf if not already present
     if ! command -v fzf &>/dev/null; then
         echo "Fzf not found. Installing..."
-        sudo yum install -y fzf
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        source ~/.fzf/install
     fi
-
-    ## Check if fzf is installed successfully
-    #if ! command -v fzf &>/dev/null; then
-    #    echo "Fzf installation failed. Cloning the repository..."
-    #    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    #    sh ~/.fzf/install
-    
-    #source ~/.zshrc
 
     # Personalize Oh my zsh
     echo "Personalizing oh-my-zsh..."
