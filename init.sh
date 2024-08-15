@@ -274,11 +274,12 @@ install_with_yum() {
 
     #source ~/.zshrc
 
+    #TODO: Add tmux installation using git clone
     # Install tmux if not already present
-    if ! command -v tmux &>/dev/null; then
-        echo "Tmux not found. Installing..."
-        sudo yum install -y tmux
-    fi
+    #if ! command -v tmux &>/dev/null; then
+    #    echo "Tmux not found. Installing..."
+    #    sudo yum install -y tmux
+    #fi
 
     #source ~/.zshrc
 
