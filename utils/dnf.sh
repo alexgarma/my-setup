@@ -156,7 +156,15 @@ if [ $tmux = true ]; then
 
         echo "Tmux installed successfully"
 
+    fi
+
+    echo "Tmux already installed"
+    read -p "Do you want to personalize tmux? (y/n): " personalize_tmux
+
+    # Personalize tmux
+    if [[ $personalize_tmux = "y" ]]; then
         echo "Personalizing tmux..."
+    
         git clone https://github.com/gpakosz/.tmux.git $HOME/oh-my-tmux
         mkdir -p $HOME/.config/tmux
         ln -s "$HOME/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
