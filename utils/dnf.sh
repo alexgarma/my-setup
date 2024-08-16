@@ -152,9 +152,9 @@ if [ $tmux = true ]; then
 
         echo "Personalizing tmux..."
         git clone https://github.com/gpakosz/.tmux.git $HOME/oh-my-tmux
-        mkdir -p ~/.config/tmux
-        ln -s "$HOME/oh-my-tmux/.tmux.conf" "~/.config/tmux/tmux.conf"
-        cp "$HOME/oh-my-tmux/.tmux.conf.local" "~/.config/tmux/tmux.conf.local"
+        mkdir -p $HOME/.config/tmux
+        ln -s "$HOME/oh-my-tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
+        cp "$HOME/oh-my-tmux/.tmux.conf.local" "$HOME/.config/tmux/tmux.conf.local"
 
     fi
 
