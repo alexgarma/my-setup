@@ -85,9 +85,6 @@ plugins=(
     zsh-interactive-cd
 )
 
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

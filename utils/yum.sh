@@ -72,7 +72,7 @@ fi
 
 # Personalize Oh my zsh
 echo "Personalizing oh-my-zsh..."
-cp dotfiles/.zshrc ~/.zshrc
+cp ../dotfiles/.zshrc ~/.zshrc
 #source ~/.zshrc
 
 # Check if wget is installed

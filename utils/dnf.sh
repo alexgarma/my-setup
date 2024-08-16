@@ -72,7 +72,7 @@ fi
 # Personalize Oh my zsh
 echo "Personalizing oh-my-zsh..."
 
-cp dotfiles/.zshrc ~/.zshrc
+cp ../dotfiles/.zshrc ~/.zshrc
 
 #source ~/.zshrc
 
@@ -114,9 +114,10 @@ fi
 # Tmux configuration
 echo "Personalizing tmux..."
 
-git clone https://github.com/gpakosz/.tmux.git $HOME
-ln -s -f $HOME/.tmux/.tmux.conf
-cp $HOME/.tmux/.tmux.conf.local $HOME
+git clone https://github.com/gpakosz/.tmux.git
+mv .tmux ~
+ln -s -f ~/.tmux/.tmux.conf
+cp ~/.tmux/.tmux.conf.local ~
 
 # TODO: Install neovim
 ## Install NeoVim if not already present
