@@ -31,6 +31,10 @@ detect_package_manager() {
             echo "Detected Arch Linux"
             echo "Package manager: Pacman"
             return 0
+        elif [[ -x "$(command -v zypper)" ]]; then
+            echo "Detected OpenSUSE"
+            echo "Package manager: Zypper"
+            return 0
         else
             echo "Package manager not found"
             return 1
@@ -96,6 +100,27 @@ install_with_yum() {
     source utils/yum.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
+install_with_zypper() {
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/zypper.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+}
+
+install_with_pacman() {
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/pacman.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+}
 
 # Function to install applications using the detected package manager
 install_applications() {
@@ -119,6 +144,12 @@ install_applications() {
             ;;
         "YUM")
             install_with_yum "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            ;;
+        "Zypper")
+            install_with_zypper "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            ;;
+        "Pacman")
+            install_with_pacman "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         *)
             echo "Unsupported package manager"
