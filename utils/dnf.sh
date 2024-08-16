@@ -82,7 +82,7 @@ if [ $fzf = true ]; then
     if ! command -v fzf &>/dev/null; then
         echo "Fzf not found. Installing..."
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        source ~/.fzf/install
+        sh -c "~/.fzf/install"
     fi
 
 fi
