@@ -50,48 +50,110 @@ trim() {
 
 # Function to install applications using Homebrew
 install_with_homebrew() {
-    source utils/homebrew.sh
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/homebrew.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
 # Function to install applications using apt-get
 install_with_apt_get() {
-    source utils/apt-get.sh
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/apt-get.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
 # Function to install applications using DNF
 install_with_dnf() {
-    source utils/dnf.sh
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/dnf.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
     
 # Function to install applications using YUM
 install_with_yum() {
-    source utils/yum.sh
+    # Recieve the arguments passed to the function
+    local oh_my_zsh=$1
+    local fzf=$2
+    local anaconda=$3
+    local tmux=$4
+
+    # Execute the script in utils with the arguments
+    source utils/yum.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
 
 # Function to install applications using the detected package manager
 install_applications() {
     local package_manager=$1
+    local oh_my_zsh=$2
+    local fzf=$3
+    local anaconda=$4
+    local tmux=$5
 
-    echo "The package manager is: $package_manager"
+    echo "The package_manager is:  $package_manager..."
 
     case $package_manager in
         "Homebrew")
-            install_with_homebrew
+            install_with_homebrew "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "apt-get")
-            install_with_apt_get
+            install_with_apt_get "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "DNF")
-            install_with_dnf
+            install_with_dnf "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "YUM")
-            install_with_yum
+            install_with_yum "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         *)
-            echo "Package manager not supported for application installation"
+            echo "Unsupported package manager"
             ;;
     esac
+
+}
+
+parse_arguments() {
+    local oh_my_zsh=false
+    local fzf=false
+    local anaconda=false
+    local tmux=false
+
+    for arg in "$@"; do
+        case $arg in
+            --oh-my-zsh=*)
+                oh_my_zsh="${arg#*=}"
+                ;;
+            --fzf=*)
+                fzf="${arg#*=}"
+                ;;
+            --anaconda=*)
+                anaconda="${arg#*=}"
+                ;;
+            --tmux=*)
+                tmux="${arg#*=}"
+                ;;
+            *)
+                echo "Invalid argument: $arg"
+                ;;
+        esac
+    done
+
+    install_applications "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
 # Assign package manager detector to a variable
@@ -100,5 +162,4 @@ package_manager=$(detect_package_manager)
 # Trim leading and trailing spaces from the package manager value
 package_manager=$(trim "${package_manager##*:}")
 
-# Install applications based on the detected package manager
-install_applications "$package_manager"
+parse_arguments "$@"
