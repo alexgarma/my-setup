@@ -114,10 +114,9 @@ fi
 # Tmux configuration
 echo "Personalizing tmux..."
 
-cd ~
-git clone https://github.com/gpakosz/.tmux.git
-ln -s -f .tmux/.tmux.conf
-cp .tmux/.tmux.conf.local .
+git clone https://github.com/gpakosz/.tmux.git ~/.tmux
+ln -s -f ~/.tmux/.tmux.conf
+cp ~/.tmux/.tmux.conf.local ~/
 
 # TODO: Install neovim
 ## Install NeoVim if not already present
