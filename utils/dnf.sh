@@ -64,7 +64,8 @@ fi
 # Install fzf if not already present
 if ! command -v fzf &>/dev/null; then
     echo "Fzf not found. Installing..."
-    sudo dnf install -y fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    source ~/.fzf/install
 fi
 #source ~/.zshrc
 

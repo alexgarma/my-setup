@@ -103,19 +103,44 @@ if ! command -v conda &>/dev/null; then
     rm $latest_version
 fi
 
-#TODO: Add tmux installation using git clone
 # Install tmux if not already present
-#if ! command -v tmux &>/dev/null; then
-#    echo "Tmux not found. Installing..."
-#    sudo yum install -y tmux
-#fi
-#source ~/.zshrc
-# Tmux configuration
-#echo "Personalizing tmux..."
-#cd ~
-#git clone https://github.com/gpakosz/.tmux.git
-#ln -s -f .tmux/.tmux.conf
-#cp .tmux/.tmux.conf.local .
+if ! command -v tmux &>/dev/null; then
+    echo "Tmux not found. Installing..."
+    sudo yum install -y libevent
+    sudo yum install -y ncurses
+    #If libevent or ncurses are not found
+    if ! command -v libevent &>/dev/null || ! command -v ncurses &>/dev/null; then
+        echo "Libevent or ncurses installation failed. Installing..."
+        sudo yum install -y libevent-devel
+        sudo yum install -y ncurses-devel
+        sudo yum install -y gcc
+        sudo yum install -y make
+        sudo yum install -y bison
+        #sudo yum install -y pkg-config
+    fi
+    sudo yum install -y autoconf
+    sudo yum install -y automake
+    
+    sudo git clone https://github.com/tmux/tmux.git /usr/local/
+    #sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && make && make install"
+    sudo sh /usr/local/tmux/autogen.sh
+    sudo sh /usr/local/tmux/configure
+    sudo make && sudo make install
+
+    # Check if tmux was installed successfully if not end the script
+    if ! command -v tmux &>/dev/null; then
+        echo "Tmux installation failed. Exiting..."
+        exit 1
+    fi
+
+    echo "Tmux installed successfully"
+    
+    echo "Personalizing tmux..."
+    cd ~
+    git clone https://github.com/gpakosz/.tmux.git
+    ln -s -f .tmux/.tmux.conf
+    cp .tmux/.tmux.conf.local .
+fi
 
 #TODO: Install neovim
 ## Install NeoVim if not already present
