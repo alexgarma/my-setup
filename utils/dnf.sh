@@ -69,10 +69,9 @@ if ! command -v fzf &>/dev/null; then
 fi
 #source ~/.zshrc
 
-# Personalize Oh my zsh
+# Personalize Oh my zsh by copying the .zshrc file
 echo "Personalizing oh-my-zsh..."
-
-cp ../dotfiles/.zshrc ~/.zshrc
+sh -c "cp ~/my-setup/dotfiles/.zshrc ~/.zshrc"
 
 #source ~/.zshrc
 
@@ -136,7 +135,7 @@ if ! command -v tmux &>/dev/null; then
     
     echo "Personalizing tmux..."
     sudo sh -c "cd ~ && git clone https://github.com/gpakosz/.tmux.git && ln -s -f .tmux/.tmux.conf && cp .tmux/.tmux.conf.local . "
-    
+
 fi
 
 #source ~/.zshrc

@@ -70,9 +70,9 @@ if ! command -v fzf &>/dev/null; then
     source ~/.fzf/install
 fi
 
-# Personalize Oh my zsh
+# Personalize Oh my zsh by copying the .zshrc file
 echo "Personalizing oh-my-zsh..."
-cp ../dotfiles/.zshrc ~/.zshrc
+sh -c "cp ~/my-setup/dotfiles/.zshrc ~/.zshrc"
 #source ~/.zshrc
 
 # Check if wget is installed
