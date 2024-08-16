@@ -82,7 +82,7 @@ if ! command -v wget &>/dev/null; then
 fi
 
 # Install Anaconda
-echo "Installing Anaconda..."
+
 # Check if Anaconda is already installed
 if ! command -v conda &>/dev/null; then
     echo "Anaconda not found. Downloading and installing..."
