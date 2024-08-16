@@ -67,11 +67,12 @@ if [ $oh_my_zsh = true ]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
     
-    echo "Oh-my-zsh personalized successfully"
+    echo "Oh-my-zsh installed successfully"
+    
     # Personalize Oh my zsh by copying the .zshrc file
     echo "Personalizing oh-my-zsh..."
     sh -c "cp ~/my-setup/dotfiles/.zshrc ~/.zshrc"
-    echo "Oh-my-zsh installed successfully"
+    echo "Oh-my-zsh personalized successfully"
 
 fi
 
