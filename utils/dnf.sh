@@ -103,10 +103,40 @@ if ! command -v conda &>/dev/null; then
     # Remove the downloaded file
     rm $latest_version
 fi
+
 # Install tmux if not already present
 if ! command -v tmux &>/dev/null; then
     echo "Tmux not found. Installing..."
-    sudo dnf install -y tmux
+    sudo dnf install -y libevent
+    sudo dnf install -y ncurses
+    #If libevent or ncurses are not found
+    if ! command -v libevent &>/dev/null || ! command -v ncurses &>/dev/null; then
+        echo "Libevent or ncurses installation failed. Installing..."
+        sudo dnf install -y libevent-devel
+        sudo dnf install -y ncurses-devel
+        sudo dnf install -y gcc
+        sudo dnf install -y make
+        sudo dnf install -y bison
+        #sudo yum install -y pkg-config
+    fi
+    sudo dnf install -y autoconf
+    sudo dnf install -y automake
+    
+    sudo git clone https://github.com/tmux/tmux.git /usr/local/
+    sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && sudo make && sudo make install"
+
+    # Check if tmux was installed successfully if not end the script
+    if ! command -v tmux &>/dev/null; then
+        echo "Tmux installation failed. Exiting..."
+        exit 1
+    fi
+
+    echo "Tmux installed successfully"
+    
+    echo "Personalizing tmux..."
+    git clone https://github.com/gpakosz/.tmux.git $HOME/.tmux
+    ln -s -f $HOME/.tmux/.tmux.conf
+    cp $HOME/.tmux/.tmux.conf.local $HOME/
 fi
 
 #source ~/.zshrc
@@ -114,10 +144,9 @@ fi
 # Tmux configuration
 echo "Personalizing tmux..."
 
-git clone https://github.com/gpakosz/.tmux.git
-mv .tmux ~
-ln -s -f ~/.tmux/.tmux.conf
-cp ~/.tmux/.tmux.conf.local ~
+git clone https://github.com/gpakosz/.tmux.git $HOME/.tmux
+ln -s -f $HOME/.tmux/.tmux.conf
+cp $HOME/.tmux/.tmux.conf.local $HOME/
 
 # TODO: Install neovim
 ## Install NeoVim if not already present
