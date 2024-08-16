@@ -151,7 +151,7 @@ if [ $tmux = true ]; then
         echo "Tmux installed successfully"
 
         echo "Personalizing tmux..."
-        sudo sh -c "cd ~ && git clone https://github.com/gpakosz/.tmux.git && ln -s -f .tmux/.tmux.conf && cp .tmux/.tmux.conf.local . "
+        sudo sh -c "git clone https://github.com/gpakosz/.tmux.git ~/.tmux && ln -s -f ~/.tmux/.tmux.conf && cp ~/.tmux/.tmux.conf.local ~/ "
 
     fi
 
