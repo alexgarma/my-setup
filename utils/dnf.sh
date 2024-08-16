@@ -123,7 +123,7 @@ if ! command -v tmux &>/dev/null; then
     sudo dnf install -y autoconf
     sudo dnf install -y automake
     
-    sudo git clone https://github.com/tmux/tmux.git /usr/local/
+    sudo git clone https://github.com/tmux/tmux.git /usr/local/tmux
     sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && sudo make && sudo make install"
 
     # Check if tmux was installed successfully if not end the script

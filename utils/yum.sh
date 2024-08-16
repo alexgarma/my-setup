@@ -122,11 +122,9 @@ if ! command -v tmux &>/dev/null; then
     sudo yum install -y autoconf
     sudo yum install -y automake
     
-    sudo git clone https://github.com/tmux/tmux.git /usr/local/
-    #sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && make && make install"
-    sudo sh /usr/local/tmux/autogen.sh
-    sudo sh /usr/local/tmux/configure
-    sudo make && sudo make install
+    sudo git clone https://github.com/tmux/tmux.git /usr/local/tmux
+    sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && sudo make && sudo make install"
+
 
     # Check if tmux was installed successfully if not end the script
     if ! command -v tmux &>/dev/null; then
