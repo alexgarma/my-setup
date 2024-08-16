@@ -163,3 +163,16 @@ package_manager=$(detect_package_manager)
 package_manager=$(trim "${package_manager##*:}")
 
 parse_arguments "$@"
+
+# Function to get linux architecture: 32-bit, 64-bit, or ARM
+#get_linux_architecture() {
+#    local architecture=$(uname -m)
+#    if [[ $architecture == "x86_64" ]]; then
+#        echo "64-bit"
+#    elif [[ $architecture == "arm"* ]]; then
+#        echo "ARM"
+#    else
+#        echo "32-bit"
+#    fi
+#}
+#

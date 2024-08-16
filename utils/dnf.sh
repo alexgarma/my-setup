@@ -29,6 +29,12 @@ if [ $oh_my_zsh = true ]; then
         sudo dnf install -y python3-pip
     fi
 
+    # Install unzip
+    if ! command -v unzip &>/dev/null; then
+        echo "Unzip not found. Installing..."
+        sudo dnf install -y unzip
+    fi
+
     # Install awscli
     if ! command -v aws &>/dev/null; then
         echo "AWS CLI not found. Installing..."
