@@ -98,7 +98,7 @@ if ! command -v conda &>/dev/null; then
     echo "Downloading Anaconda version: $latest_version"
     curl -LO https://repo.anaconda.com/archive/$latest_version
     #Bash script to install Anaconda answering yes to all prompts
-    bash $latest_version -b -p $HOME/anaconda3
+    bash $latest_version
     # Remove the downloaded file
     rm $latest_version
 fi
@@ -108,6 +108,7 @@ if ! command -v tmux &>/dev/null; then
     echo "Tmux not found. Installing..."
     sudo yum install -y libevent
     sudo yum install -y ncurses
+    sudo yum install -y perl
     #If libevent or ncurses are not found
     if ! command -v libevent &>/dev/null || ! command -v ncurses &>/dev/null; then
         echo "Libevent or ncurses installation failed. Installing..."
