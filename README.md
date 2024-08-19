@@ -18,7 +18,7 @@ exit # Restart of terminal is required
 
 You can also run the script with the following options, by default all options are set to false:
 
-- `--oh-my-zsh=true` to install Oh-My-Zsh framework
+- `--oh-my-zsh=true` to install Zsh and Oh-My-Zsh framework
 - `--tmux=true` to install Tmux terminal multiplexer
 - `--fzf=true` to install FZF fuzzy finder
 - `--anaconda=true` to install Anaconda Python distribution
@@ -29,14 +29,31 @@ Recommendation: Run the script in a clean environment (fresh installation of the
 
 # Further improvements 🚀
 
-- Add support for Windows Subsystem for Linux (WSL)
-- Parameterize the Linux distribution to avoid redundancy in the utility scripts
-- Add neoVim installation and configuration logic
-- Add support to validate the OS version and architecture (64-bit, ARM) since some tools are not supported in all architectures or installations may vary.
-- Test the script in different MacOS versions
-- Add logic for Arch Linux installation
-- Add more options to install other tools and utilities like Docker, Rust, R, Scala, Spark, etc.
-- Make the parameters shorter and more intuitive (e.g. --oh-my-zsh -> -z, --tmux -> -t, etc)
+- [ ] Add support for Windows Subsystem for Linux (WSL)
+- [X] Parameterize the Linux distribution to avoid redundancy in the utility scripts
+- [ ] Add neoVim installation and configuration logic
+- [ ] Add support to validate the OS version and architecture (64-bit, ARM) since some tools are not supported in all architectures or installations may vary (eg. Anaconda)
+- [ ] Test the script in different MacOS versions
+- [ ] Add logic for Arch Linux installation
+- [ ] Add more options to install other tools and utilities like Docker, Rust, R, Scala, Spark, etc.
+- [ ] Make the parameters shorter and more intuitive (e.g. --oh-my-zsh -> -z, --tmux -> -t, etc)
+
+# Author 🧑‍💻
+
+Alex Garduno - [LinkedIn](https://www.linkedin.com/in/alexgarduno/) - [GitHub](https://github.com/alexgarma)
+
+# Acknowledgements 🙏
+
+Some of the resources used to build this setup, thanks to the authors and contributors of those projects:
+
+- [Oh-My-Zsh](https://ohmyz.sh/)
+- [Tmux](https://github.com/tmux/tmux)
+- [gpakoz tmux configuration](https://github.com/gpakosz/.tmux.git)
+- [FZF](https://github.com/junegunn/fzf)
+
+# Contributing 🤝
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 📝
 
 # License 📜
 
