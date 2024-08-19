@@ -36,6 +36,7 @@ Recommendation: Run the script in a clean environment (fresh installation of the
 - Test the script in different MacOS versions
 - Add logic for Arch Linux installation
 - Add more options to install other tools and utilities like Docker, Rust, R, Scala, Spark, etc.
+- Make the parameters shorter and more intuitive (e.g. --oh-my-zsh -> -z, --tmux -> -t, etc)
 
 # License 📜
 
