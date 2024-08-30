@@ -35,7 +35,8 @@ Recommendation: Run the script in a clean environment (fresh installation of the
 - [ ] Add support to validate the OS version and architecture (64-bit, ARM) since some tools are not supported in all architectures or installations may vary (eg. Anaconda)
 - [ ] Test the script in different MacOS versions
 - [ ] Add logic for Arch Linux installation
-- [ ] Add more options to install other tools and utilities like Docker, Rust, R, Scala, Spark, etc.
+- [ ] Add more options to install other tools and utilities
+  - [X] Add support for R installation and configuration in Linux
 - [ ] Make the parameters shorter and more intuitive (e.g. --oh-my-zsh -> -z, --tmux -> -t, etc)
 - [ ] Limit who can contribute to the repository to avoid malicious code, make it private
 

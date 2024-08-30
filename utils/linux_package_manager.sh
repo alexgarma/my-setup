@@ -4,6 +4,7 @@ local oh_my_zsh=$2
 local fzf=$3
 local anaconda=$4
 local tmux=$5
+local r=$6
 
 # Update dependencies
 echo "Installing applications with $package_manager..."
@@ -173,6 +174,50 @@ if [ $tmux = true ]; then
 
     fi
 
+fi
+
+# When r is true
+if [ $r = true ]; then
+    # Install radian in a conda base environment
+    if ! command -v radian &>/dev/null; then
+        echo "Radian not found. Installing..."
+        #Check if conda is installed
+        if ! command -v conda &>/dev/null; then
+            echo "Conda not found. Install anaconda first. Exiting..."
+            exit 1
+        fi
+        conda install -c conda-forge radian
+    fi
+    # Install R if not already present
+    if ! command -v R &>/dev/null; then
+        echo "R not found. Installing..."
+        sudo $package_manager install R
+    fi
+
+    # Install RStudio
+    #if ! command -v rstudio &>/dev/null; then
+    #    echo "RStudio not found. Installing..."
+    #    sudo $package_manager install -y rstudio
+    #fi
+
+    # Modify zshrc to include Radian as the default R interpreter
+    read -p "Do you want to make an alias for Radian as R interpreter ? (y/n): " make_alias_radian
+    if [[ $make_alias_radian = "y" ]]; then
+        echo "Personalizing zshrc..."
+        echo "alias r=radian" >> ~/.zshrc
+        #echo "alias RStudio=rstudio" >> ~/.zshrc
+    fi
+
+    # Install R  packages
+    read -p "Do you want to install R languageserver,httpgd packages? (y/n): " install_r_packages
+    if [[ $install_r_packages = "y" ]]; then
+        echo "Installing R packages..."
+        #sudo R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
+        sudo R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+        #echo "y" | R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
+        #echo "y" | R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+        #R -e "install.packages('languageserver', repos='http://cran.rstudio.com/', lib='~/R/library')"
+    fi
 fi
 
 #TODO: Install neovim
