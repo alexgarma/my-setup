@@ -208,14 +208,13 @@ if [ $r = true ]; then
         #echo "alias RStudio=rstudio" >> ~/.zshrc
     fi
 
-    # Prompt to install R packages
-    #read -p "Do you want to install R languageserver,httpgd packages? (y/n): " install_r_packages
-    #if [[ $install_r_packages = "y" ]]; then
-    #    # Install R packages
-    #    echo "Installing R packages..."
-    #    R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
-    #    R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
-    #fi
+    # Install R  packages
+    read -p "Do you want to install R languageserver,httpgd packages? (y/n): " install_r_packages
+    if [[ $install_r_packages = "y" ]]; then
+        echo "Installing R packages..."
+        R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
+        R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+    fi
 fi
 
 #TODO: Install neovim
