@@ -37,6 +37,7 @@ Recommendation: Run the script in a clean environment (fresh installation of the
 - Add logic for Arch Linux installation
 - Add more options to install other tools and utilities like Docker, Rust, R, Scala, Spark, etc.
 - Make the parameters shorter and more intuitive (e.g. --oh-my-zsh -> -z, --tmux -> -t, etc)
+- Limit who can contribute to the repository to avoid malicious code, make it private
 
 # License 📜
 
