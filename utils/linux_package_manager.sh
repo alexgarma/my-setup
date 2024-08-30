@@ -191,7 +191,7 @@ if [ $r = true ]; then
     # Install R if not already present
     if ! command -v R &>/dev/null; then
         echo "R not found. Installing..."
-        sudo $package_manager install -y R
+        sudo $package_manager install R
     fi
 
     # Install RStudio
@@ -212,8 +212,11 @@ if [ $r = true ]; then
     read -p "Do you want to install R languageserver,httpgd packages? (y/n): " install_r_packages
     if [[ $install_r_packages = "y" ]]; then
         echo "Installing R packages..."
-        R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
-        R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+        #sudo R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
+        sudo R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+        #echo "y" | R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
+        #echo "y" | R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
+        #R -e "install.packages('languageserver', repos='http://cran.rstudio.com/', lib='~/R/library')"
     fi
 fi
 
