@@ -1,38 +1,39 @@
 #!/bin/bash
-local oh_my_zsh=$1
-local fzf=$2
-local anaconda=$3
-local tmux=$4
+local package_manager=$1
+local oh_my_zsh=$2
+local fzf=$3
+local anaconda=$4
+local tmux=$5
 
 # Update dependencies
-echo "Installing applications with DNF..."
+echo "Installing applications with $package_manager..."
 echo "Updating dependencies..."
-sudo dnf update
+sudo $package_manager update
 
 # When oh_my_zsh is true
 if [ $oh_my_zsh = true ]; then
     # Validate if git is installed
     if ! command -v git &>/dev/null; then
         echo "Git not found. Installing..."
-        sudo dnf install -y git
+        sudo $package_manager install -y git
     fi
 
     # Install python3
     if ! command -v python3 &>/dev/null; then
         echo "Python3 not found. Installing..."
-        sudo dnf install -y python3
+        sudo $package_manager install -y python3
     fi
 
     # Install pip3
     if ! command -v pip3 &>/dev/null; then
         echo "Pip3 not found. Installing..."
-        sudo dnf install -y python3-pip
+        sudo $package_manager install -y python3-pip
     fi
 
     # Install unzip
     if ! command -v unzip &>/dev/null; then
         echo "Unzip not found. Installing..."
-        sudo dnf install -y unzip
+        sudo $package_manager install -y unzip
     fi
 
     # Install awscli
@@ -46,20 +47,20 @@ if [ $oh_my_zsh = true ]; then
     # Install SSH
     if ! command -v ssh &>/dev/null; then
         echo "SSH not found. Installing..."
-        sudo dnf install -y openssh
+        sudo $package_manager install -y openssh
     fi
     # TODO: Add ssh-agent
 
     # Utils util-linux-user (is only needed to change default shell in some distros)
     if ! command -v chsh &>/dev/null; then
         echo "Chsh not found. Installing..."
-        sudo dnf install util-linux-user
+        sudo $package_manager install util-linux-user
     fi
 
     # Install Zsh if not already present
     if ! command -v zsh &>/dev/null; then
         echo "Zsh not found. Installing..."
-        sudo dnf install -y zsh
+        sudo $package_manager install -y zsh
     fi
 
     # Make Zsh default shell (default user)
@@ -98,7 +99,7 @@ if [ $anaconda = true ]; then
     # Check if wget is installed
     if ! command -v wget &>/dev/null; then
         echo "Wget not found. Installing..."
-        sudo dnf install -y wget
+        sudo $package_manager install -y wget
     fi
 
     # Install Anaconda
@@ -129,21 +130,21 @@ if [ $tmux = true ]; then
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
         echo "Tmux not found. Installing..."
-        sudo dnf install -y libevent
-        sudo dnf install -y ncurses
-        sudo dnf install -y perl
+        sudo $package_manager install -y libevent
+        sudo $package_manager install -y ncurses
+        sudo $package_manager install -y perl
         #If libevent or ncurses are not found
         if ! command -v libevent &>/dev/null || ! command -v ncurses &>/dev/null; then
             echo "Libevent or ncurses installation failed. Installing..."
-            sudo dnf install -y libevent-devel
-            sudo dnf install -y ncurses-devel
-            sudo dnf install -y gcc
-            sudo dnf install -y make
-            sudo dnf install -y bison
+            sudo $package_manager install -y libevent-devel
+            sudo $package_manager install -y ncurses-devel
+            sudo $package_manager install -y gcc
+            sudo $package_manager install -y make
+            sudo $package_manager install -y bison
             #sudo yum install -y pkg-config
         fi
-        sudo dnf install -y autoconf
-        sudo dnf install -y automake
+        sudo $package_manager install -y autoconf
+        sudo $package_manager install -y automake
 
         sudo git clone https://github.com/tmux/tmux.git /usr/local/tmux
         sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && sudo make && sudo make install"

@@ -52,74 +52,30 @@ trim() {
     echo -n "$var"
 }
 
-# Function to install applications using Homebrew
-install_with_homebrew() {
+# Function to install applications using MacOS package manager
+install_with_macos_package_manager() {
     # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
+    local package_manager=$1
+    local oh_my_zsh=$2
+    local fzf=$3
+    local anaconda=$4
+    local tmux=$5
 
     # Execute the script in utils with the arguments
-    source utils/homebrew.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+    source utils/macos_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
-# Function to install applications using apt-get
-install_with_apt_get() {
+# Function to install applications using Linux package managers
+install_with_linux_package_manager() {
     # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
+    local package_manager=$1
+    local oh_my_zsh=$2
+    local fzf=$3
+    local anaconda=$4
+    local tmux=$5
 
     # Execute the script in utils with the arguments
-    source utils/apt-get.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
-}
-
-# Function to install applications using DNF
-install_with_dnf() {
-    # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
-
-    # Execute the script in utils with the arguments
-    source utils/dnf.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
-}
-    
-# Function to install applications using YUM
-install_with_yum() {
-    # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
-
-    # Execute the script in utils with the arguments
-    source utils/yum.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
-}
-
-install_with_zypper() {
-    # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
-
-    # Execute the script in utils with the arguments
-    source utils/zypper.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
-}
-
-install_with_pacman() {
-    # Recieve the arguments passed to the function
-    local oh_my_zsh=$1
-    local fzf=$2
-    local anaconda=$3
-    local tmux=$4
-
-    # Execute the script in utils with the arguments
-    source utils/pacman.sh "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+    source utils/linux_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
 }
 
 # Function to install applications using the detected package manager
@@ -134,22 +90,22 @@ install_applications() {
 
     case $package_manager in
         "Homebrew")
-            install_with_homebrew "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_macos_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "apt-get")
-            install_with_apt_get "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "DNF")
-            install_with_dnf "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "YUM")
-            install_with_yum "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "Zypper")
-            install_with_zypper "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         "Pacman")
-            install_with_pacman "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux"
             ;;
         *)
             echo "Unsupported package manager"
@@ -157,6 +113,18 @@ install_applications() {
     esac
 
 }
+
+# TODO: Function to get OS architecture: 32-bit, 64-bit, or ARM
+# get_architecture() {
+#    local architecture=$(uname -m)
+#    if [[ $architecture == "x86_64" ]]; then
+#        echo "64-bit"
+#    elif [[ $architecture == "arm"* ]]; then
+#        echo "ARM"
+#    else
+#        echo "32-bit"
+#    fi
+#}
 
 parse_arguments() {
     local oh_my_zsh=false
@@ -194,16 +162,3 @@ package_manager=$(detect_package_manager)
 package_manager=$(trim "${package_manager##*:}")
 
 parse_arguments "$@"
-
-# Function to get linux architecture: 32-bit, 64-bit, or ARM
-#get_linux_architecture() {
-#    local architecture=$(uname -m)
-#    if [[ $architecture == "x86_64" ]]; then
-#        echo "64-bit"
-#    elif [[ $architecture == "arm"* ]]; then
-#        echo "ARM"
-#    else
-#        echo "32-bit"
-#    fi
-#}
-#
