@@ -172,4 +172,7 @@ package_manager=$(detect_package_manager)
 # Trim leading and trailing spaces from the package manager value
 package_manager=$(trim "${package_manager##*:}")
 
+# Print the package manager value
+echo "--- Package manager: $package_manager ----"
+
 parse_arguments "$@"
