@@ -4,6 +4,8 @@ local oh_my_zsh=$2
 local fzf=$3
 local anaconda=$4
 local tmux=$5
+local r=$6
+local nvim=$7
 
 # Update dependencies
 echo "Installing applications with $package_manager..."

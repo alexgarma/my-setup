@@ -5,6 +5,7 @@ local fzf=$3
 local anaconda=$4
 local tmux=$5
 local r=$6
+local nvim=$7
 
 # Update dependencies
 echo "Installing applications with $package_manager..."
@@ -220,19 +221,69 @@ if [ $r = true ]; then
     fi
 fi
 
-#TODO: Install neovim
-## Install NeoVim if not already present
-#if ! command -v nvim &>/dev/null; then
-#    echo "NeoVim not found. Downloading and installing..."
-#    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-#    chmod u+x nvim.appimage
-#    ./nvim.appimage
-#fi
-#
-## Check if NeoVim is installed successfully
-#if ! command -v nvim &>/dev/null; then
-#    echo "NeoVim installation failed. Extracting and running the app image..."
-#    ./nvim.appimage --appimage-extract
-#    ./squashfs-root/AppRun --version
-#fi
-# TODO: Make neovim the default editor
+# When nvim is true
+if [ $nvim = true ]; then
+    # Install prerequisites
+    echo "Installing prerequisites for NeoVim..."
+    #sudo $package_manager -y install fuse
+    sudo $package_manager -y install libfuse2
+
+    # Install NeoVim if not already present
+    if ! command -v nvim &>/dev/null; then
+        echo "NeoVim not found. Downloading and installing..."
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        chmod u+x nvim.appimage
+        ./nvim.appimage
+
+        # Check if NeoVim is installed successfully
+        if ! command -v nvim &>/dev/null; then
+            echo "NeoVim installation failed. Extracting and running the app image..."
+            ./nvim.appimage --appimage-extract
+            ./squashfs-root/AppRun --version
+            # Exposing nvim globally
+            sudo mv squashfs-root /
+            sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+            #nvim
+        fi
+        
+        # Exposing nvim globally
+        mkdir -p /opt/nvim
+        mv nvim.appimage /opt/nvim/nvim
+        # Add nvim to the PATH
+        echo "export PATH=$PATH:/opt/nvim" >> ~/.zshrc
+
+        echo "NeoVim installed successfully"
+    fi
+
+    # Ask user if they want to personalize NeoVim
+    read -p "Do you want to personalize NeoVim? (y/n): " personalize_nvim
+
+    # Personalize NeoVim
+    if [[ $personalize_nvim = "y" ]]; then
+        # Install dependencies
+        echo "Installing dependencies ..."
+        sudo $package_manager install -y xclip
+        sudo $package_manager install -y ripgrep # TODO: Check if it was installed successfully
+        sudo $package_manager install -y make
+        sudo $package_manager install -y unzip
+        sudo $package_manager install -y gcc
+    fi
+
+    git clone https://github.com/alexgarma/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+
+    echo "NeoVim personalized successfully, please run nvim to apply changes"
+
+    # Ask user if they want to make NeoVim the default editor
+    read -p "Do you want to make NeoVim the default editor? (y/n): " make_nvim_default
+
+    # Make NeoVim the default editor
+    if [[ $make_nvim_default = "y" ]]; then
+        echo "Making NeoVim the default editor..."
+        sudo update-alternatives --install /usr/bin/editor editor /opt/nvim/nvim 100
+        sudo update-alternatives --set editor /opt/nvim/nvim
+        sudo update-alternatives --install /usr/bin/vi vi /opt/nvim/nvim 100
+        sudo update-alternatives --set vi /opt/nvim/nvim
+        sudo update-alternatives --set vim /opt/nvim/nvim
+    fi
+
+fi

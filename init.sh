@@ -61,9 +61,10 @@ install_with_macos_package_manager() {
     local anaconda=$4
     local tmux=$5
     local r=$6
+    local nvim=$7
 
     # Execute the script in utils with the arguments
-    source utils/macos_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+    source utils/macos_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
 
 # Function to install applications using Linux package managers
@@ -75,9 +76,10 @@ install_with_linux_package_manager() {
     local anaconda=$4
     local tmux=$5
     local r=$6
+    local nvim=$7
 
     # Execute the script in utils with the arguments
-    source utils/linux_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+    source utils/linux_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
 
 # Function to install applications using the detected package manager
@@ -88,27 +90,28 @@ install_applications() {
     local anaconda=$4
     local tmux=$5
     local r=$6
+    local nvim=$7
 
     echo "The package_manager is:  $package_manager..."
 
     case $package_manager in
         "Homebrew")
-            install_with_macos_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_macos_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "apt-get")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "DNF")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "YUM")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "Zypper")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "Pacman")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         *)
             echo "Unsupported package manager"
@@ -134,6 +137,8 @@ parse_arguments() {
     local fzf=false
     local anaconda=false
     local tmux=false
+    local r=false
+    local nvim=false
 
     for arg in "$@"; do
         case $arg in
@@ -158,7 +163,7 @@ parse_arguments() {
         esac
     done
 
-    install_applications "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r"
+    install_applications "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
 
 # Assign package manager detector to a variable
