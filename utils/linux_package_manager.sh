@@ -7,6 +7,9 @@ local tmux=$5
 local r=$6
 local nvim=$7
 
+# Lowercase the package manager
+package_manager=$(echo $package_manager | tr '[:upper:]' '[:lower:]')
+
 # Update dependencies
 echo "Installing applications with $package_manager..."
 echo "Updating dependencies..."
