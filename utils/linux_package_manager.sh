@@ -283,6 +283,7 @@ if [ $nvim = true ]; then
         sudo update-alternatives --set editor /opt/nvim/nvim
         sudo update-alternatives --install /usr/bin/vi vi /opt/nvim/nvim 100
         sudo update-alternatives --set vi /opt/nvim/nvim
+        sudo update-alternatives --install /usr/bin/vim vim /opt/nvim/nvim 100
         sudo update-alternatives --set vim /opt/nvim/nvim
     fi
 
