@@ -212,6 +212,7 @@ if [ $r = true ]; then
     # Install R  packages
     read -p "Do you want to install R languageserver,httpgd packages? (y/n): " install_r_packages
     if [[ $install_r_packages = "y" ]]; then
+        # TODO : Check dependencies for:  libcurl-devel harfbuzz-devel fribidi-devel freetype-devel libpng-devel libtiff-devel libjpeg-devel
         echo "Installing R packages..."
         sudo R -e "install.packages('languageserver', repos='https://cran.rstudio.com/')"
         sudo R -e "install.packages('httpgd', repos='https://cran.rstudio.com/')"
