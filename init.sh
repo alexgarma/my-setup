@@ -157,6 +157,9 @@ parse_arguments() {
             --r=*)
                 r="${arg#*=}"
                 ;;
+            --nvim=*)
+                nvim="${arg#*=}"
+                ;;
             *)
                 echo "Invalid argument: $arg"
                 ;;
