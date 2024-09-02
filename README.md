@@ -31,7 +31,7 @@ Recommendation: Run the script in a clean environment (fresh installation of the
 
 - [ ] Add support for Windows Subsystem for Linux (WSL)
 - [X] Parameterize the Linux distribution to avoid redundancy in the utility scripts
-- [ ] Add neoVim installation and configuration logic
+- [X] Add neoVim installation and configuration logic
 - [ ] Add support to validate the OS version and architecture (64-bit, ARM) since some tools are not supported in all architectures or installations may vary (eg. Anaconda)
 - [ ] Test the script in different MacOS versions
 - [ ] Add logic for Arch Linux installation
@@ -52,6 +52,8 @@ Some of the resources used to build this setup, thanks to the authors and contri
 - [Tmux](https://github.com/tmux/tmux)
 - [gpakoz tmux configuration](https://github.com/gpakosz/.tmux.git)
 - [FZF](https://github.com/junegunn/fzf)
+- [NeoVim](https://neovim.io/)
+- [Kickstart nvim](https://github.com/nvim-lua/kickstart.nvim)
 
 # Contributing 🤝
 
