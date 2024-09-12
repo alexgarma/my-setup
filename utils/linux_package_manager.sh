@@ -234,10 +234,17 @@ if [ $nvim = true ]; then
 
     # Install NeoVim if not already present
     if ! command -v nvim &>/dev/null; then
+
         echo "NeoVim not found. Downloading and installing..."
         curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
         chmod u+x nvim.appimage
         ./nvim.appimage
+
+        # Exposing nvim globally
+        mkdir -p /opt/nvim
+        mv nvim.appimage /opt/nvim/nvim
+        # Add nvim to the PATH
+        echo "export PATH=$PATH:/opt/nvim" >> ~/.zshrc
 
         # Check if NeoVim is installed successfully
         if ! command -v nvim &>/dev/null; then
@@ -250,12 +257,6 @@ if [ $nvim = true ]; then
             #nvim
         fi
         
-        # Exposing nvim globally
-        mkdir -p /opt/nvim
-        mv nvim.appimage /opt/nvim/nvim
-        # Add nvim to the PATH
-        echo "export PATH=$PATH:/opt/nvim" >> ~/.zshrc
-
         echo "NeoVim installed successfully"
     fi
 

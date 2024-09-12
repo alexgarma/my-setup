@@ -177,19 +177,53 @@ if [ $tmux = true ]; then
 
 fi
 
-#TODO: Install neovim
-## Install NeoVim if not already present
-#if ! command -v nvim &>/dev/null; then
-#    echo "NeoVim not found. Downloading and installing..."
-#    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-#    chmod u+x nvim.appimage
-#    ./nvim.appimage
-#fi
-#
-## Check if NeoVim is installed successfully
-#if ! command -v nvim &>/dev/null; then
-#    echo "NeoVim installation failed. Extracting and running the app image..."
-#    ./nvim.appimage --appimage-extract
-#    ./squashfs-root/AppRun --version
-#fi
-# TODO: Make neovim the default editor
+# When nvim is true
+if [ $nvim = true ]; then
+
+    # Install NeoVim if not already present
+    if ! command -v nvim &>/dev/null; then
+
+        echo "NeoVim not found. Downloading and installing..."
+        sudo $package_manager install neovim
+
+        # Check if NeoVim is installed successfully
+        if ! command -v nvim &>/dev/null; then
+            echo "NeoVim installation failed."
+            exit 1
+        fi
+        
+        echo "NeoVim installed successfully"
+    fi
+
+    # Ask user if they want to personalize NeoVim
+    read -p "Do you want to personalize NeoVim? (y/n): " personalize_nvim
+
+    # Personalize NeoVim
+    if [[ $personalize_nvim = "y" ]]; then
+        # Install dependencies
+        echo "Installing dependencies ..."
+        sudo $package_manager install -y xclip
+        sudo $package_manager install -y ripgrep # TODO: Check if it was installed successfully
+        sudo $package_manager install -y make
+        sudo $package_manager install -y unzip
+        sudo $package_manager install -y gcc
+    fi
+
+    git clone https://github.com/alexgarma/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+
+    echo "NeoVim personalized successfully, please run nvim to apply changes"
+
+    # Ask user if they want to make NeoVim the default editor
+    read -p "Do you want to make NeoVim the default editor? (y/n): " make_nvim_default
+
+    # Make NeoVim the default editor
+    if [[ $make_nvim_default = "y" ]]; then
+        echo "Making NeoVim the default editor..."
+        sudo update-alternatives --install /usr/bin/editor editor /opt/nvim/nvim 100
+        sudo update-alternatives --set editor /opt/nvim/nvim
+        sudo update-alternatives --install /usr/bin/vi vi /opt/nvim/nvim 100
+        sudo update-alternatives --set vi /opt/nvim/nvim
+        sudo update-alternatives --install /usr/bin/vim vim /opt/nvim/nvim 100
+        sudo update-alternatives --set vim /opt/nvim/nvim
+    fi
+fi
