@@ -130,15 +130,13 @@ if [ $anaconda = true ]; then
         # Split the string by the delimiter `>` and get the second element
         latest_version=$(echo $latest_version | cut -d '>' -f 2)
         echo "-- Downloading Anaconda version: $latest_version --"
-        ## Remove the index.html file
-        #rm index.html
-        ## Download the latest version of Anaconda
-        #echo "Downloading Anaconda version: $latest_version"
-        #curl -LO https://repo.anaconda.com/archive/$latest_version
-        ##Bash script to install Anaconda
-        #bash $latest_version
-        ## Remove the downloaded file
-        #rm $latest_version
+        # Remove the index.html file
+        rm index.html
+        curl -LO https://repo.anaconda.com/archive/$latest_version
+        #Bash script to install Anaconda
+        bash $latest_version
+        # Remove the downloaded file
+        rm $latest_version
     fi
     echo "Anaconda installed..."
 fi
