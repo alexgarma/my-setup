@@ -1,41 +1,54 @@
 #!/bin/bash
-local package_manager=$1
-local oh_my_zsh=$2
-local fzf=$3
-local anaconda=$4
-local tmux=$5
-local r=$6
-local nvim=$7
+local os=$1
+local architecture=$2
+local package_manager=$3
+local oh_my_zsh=$4
+local fzf=$5
+local anaconda=$6
+local tmux=$7
+local r=$8
+local nvim=$9
 
-# Update dependencies
-echo "Installing applications with $package_manager..."
+# Lowercase the package manager
+package_manager=$(echo $package_manager | tr '[:upper:]' '[:lower:]')
+
+if [[ $package_manager == "homebrew" ]]; then
+    package_manager="brew"
+fi
+
+echo "--- Operating system is: $os ---"
+echo "--- Architecture is : $architecture ---"
+echo "--- Package manager is: $package_manager ----"
+
 echo "Updating dependencies..."
-sudo $package_manager update
+$package_manager update
+
+echo "Installing applications with $package_manager..."
 
 # When oh_my_zsh is true
 if [ $oh_my_zsh = true ]; then
     # Validate if git is installed
     if ! command -v git &>/dev/null; then
         echo "Git not found. Installing..."
-        sudo $package_manager install -y git
+        $package_manager install -y git
     fi
 
     # Install python3
     if ! command -v python3 &>/dev/null; then
         echo "Python3 not found. Installing..."
-        sudo $package_manager install -y python3
+        $package_manager install -y python3
     fi
 
     # Install pip3
     if ! command -v pip3 &>/dev/null; then
         echo "Pip3 not found. Installing..."
-        sudo $package_manager install -y python3-pip
+        $package_manager install -y python3-pip
     fi
 
     # Install unzip
     if ! command -v unzip &>/dev/null; then
         echo "Unzip not found. Installing..."
-        sudo $package_manager install -y unzip
+        $package_manager install -y unzip
     fi
 
     # Install awscli
@@ -43,30 +56,30 @@ if [ $oh_my_zsh = true ]; then
         echo "AWS CLI not found. Installing..."
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
         unzip awscliv2.zip
-        sudo ./aws/install
+        ./aws/install
     fi
 
     # Install SSH
     if ! command -v ssh &>/dev/null; then
         echo "SSH not found. Installing..."
-        sudo $package_manager install -y openssh
+        $package_manager install -y openssh
     fi
     # TODO: Add ssh-agent
 
     # Utils util-linux-user (is only needed to change default shell in some distros)
     if ! command -v chsh &>/dev/null; then
         echo "Chsh not found. Installing..."
-        sudo $package_manager install util-linux-user
+        $package_manager install util-linux-user
     fi
 
     # Install Zsh if not already present
     if ! command -v zsh &>/dev/null; then
         echo "Zsh not found. Installing..."
-        sudo $package_manager install -y zsh
+        $package_manager install -y zsh
     fi
 
     # Make Zsh default shell (default user)
-    sudo chsh -s $(which zsh) $(whoami)
+    chsh -s $(which zsh) $(whoami)
     #source ~/.zshrc
     echo "The default shell is: $SHELL"
 
@@ -98,10 +111,11 @@ fi
 
 # When anaconda is true
 if [ $anaconda = true ]; then
+    echo "Installing Anaconda..."
     # Check if wget is installed
     if ! command -v wget &>/dev/null; then
         echo "Wget not found. Installing..."
-        sudo $package_manager install -y wget
+        $package_manager install -y wget
     fi
 
     # Install Anaconda
@@ -112,19 +126,21 @@ if [ $anaconda = true ]; then
         # Make a request to the Anaconda website
         wget https://repo.anaconda.com/archive/
         # Extract the latest version of Anaconda ignoring the rest of the HTML and cut the first result
-        latest_version=$(grep -o 'Anaconda3-.*-Linux-x86_64.sh' index.html | head -n 1)
+        latest_version=$(grep -o "Anaconda3-.*-$os-$architecture.sh" index.html | head -n 1)
         # Split the string by the delimiter `>` and get the second element
         latest_version=$(echo $latest_version | cut -d '>' -f 2)
-        # Remove the index.html file
-        rm index.html
-        # Download the latest version of Anaconda
-        echo "Downloading Anaconda version: $latest_version"
-        curl -LO https://repo.anaconda.com/archive/$latest_version
-        #Bash script to install Anaconda
-        bash $latest_version
-        # Remove the downloaded file
-        rm $latest_version
+        echo "-- Downloading Anaconda version: $latest_version --"
+        ## Remove the index.html file
+        #rm index.html
+        ## Download the latest version of Anaconda
+        #echo "Downloading Anaconda version: $latest_version"
+        #curl -LO https://repo.anaconda.com/archive/$latest_version
+        ##Bash script to install Anaconda
+        #bash $latest_version
+        ## Remove the downloaded file
+        #rm $latest_version
     fi
+    echo "Anaconda installed..."
 fi
 
 # When tmux is true
@@ -132,24 +148,24 @@ if [ $tmux = true ]; then
     # Install tmux if not already present
     if ! command -v tmux &>/dev/null; then
         echo "Tmux not found. Installing..."
-        sudo $package_manager install -y libevent
-        sudo $package_manager install -y ncurses
-        sudo $package_manager install -y perl
+        $package_manager install -y libevent
+        $package_manager install -y ncurses
+        $package_manager install -y perl
         #If libevent or ncurses are not found
         if ! command -v libevent &>/dev/null || ! command -v ncurses &>/dev/null; then
             echo "Libevent or ncurses installation failed. Installing..."
-            sudo $package_manager install -y libevent-devel
-            sudo $package_manager install -y ncurses-devel
-            sudo $package_manager install -y gcc
-            sudo $package_manager install -y make
-            sudo $package_manager install -y bison
-            #sudo yum install -y pkg-config
+            $package_manager install -y libevent-devel
+            $package_manager install -y ncurses-devel
+            $package_manager install -y gcc
+            $package_manager install -y make
+            $package_manager install -y bison
+            #yum install -y pkg-config
         fi
-        sudo $package_manager install -y autoconf
-        sudo $package_manager install -y automake
+        $package_manager install -y autoconf
+        $package_manager install -y automake
 
-        sudo git clone https://github.com/tmux/tmux.git /usr/local/tmux
-        sudo sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && sudo make && sudo make install"
+        git clone https://github.com/tmux/tmux.git /usr/local/tmux
+        sh -c "cd /usr/local/tmux && ./autogen.sh && ./configure && make && make install"
 
         # Check if tmux was installed successfully if not end the script
         if ! command -v tmux &>/dev/null; then
@@ -184,7 +200,7 @@ if [ $nvim = true ]; then
     if ! command -v nvim &>/dev/null; then
 
         echo "NeoVim not found. Downloading and installing..."
-        sudo $package_manager install neovim
+        $package_manager install neovim
 
         # Check if NeoVim is installed successfully
         if ! command -v nvim &>/dev/null; then
@@ -202,11 +218,11 @@ if [ $nvim = true ]; then
     if [[ $personalize_nvim = "y" ]]; then
         # Install dependencies
         echo "Installing dependencies ..."
-        sudo $package_manager install -y xclip
-        sudo $package_manager install -y ripgrep # TODO: Check if it was installed successfully
-        sudo $package_manager install -y make
-        sudo $package_manager install -y unzip
-        sudo $package_manager install -y gcc
+        $package_manager install -y xclip
+        $package_manager install -y ripgrep # TODO: Check if it was installed successfully
+        $package_manager install -y make
+        $package_manager install -y unzip
+        $package_manager install -y gcc
     fi
 
     git clone https://github.com/alexgarma/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
@@ -219,11 +235,11 @@ if [ $nvim = true ]; then
     # Make NeoVim the default editor
     if [[ $make_nvim_default = "y" ]]; then
         echo "Making NeoVim the default editor..."
-        sudo update-alternatives --install /usr/bin/editor editor /opt/nvim/nvim 100
-        sudo update-alternatives --set editor /opt/nvim/nvim
-        sudo update-alternatives --install /usr/bin/vi vi /opt/nvim/nvim 100
-        sudo update-alternatives --set vi /opt/nvim/nvim
-        sudo update-alternatives --install /usr/bin/vim vim /opt/nvim/nvim 100
-        sudo update-alternatives --set vim /opt/nvim/nvim
+        update-alternatives --install /usr/bin/editor editor /opt/nvim/nvim 100
+        update-alternatives --set editor /opt/nvim/nvim
+        update-alternatives --install /usr/bin/vi vi /opt/nvim/nvim 100
+        update-alternatives --set vi /opt/nvim/nvim
+        update-alternatives --install /usr/bin/vim vim /opt/nvim/nvim 100
+        update-alternatives --set vim /opt/nvim/nvim
     fi
 fi

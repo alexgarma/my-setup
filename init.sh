@@ -1,5 +1,37 @@
 #!/bin/bash
 
+# Function to trim leading and trailing spaces from a string
+trim() {
+    local var=$1
+    var=$(echo "$var" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    echo -n "$var"
+}
+
+# Function to get OS
+get_os() {
+    local os=$(uname)
+    if [[ $os == "Darwin" ]]; then
+        echo "MacOSX"
+    elif [[ $os == "Linux" ]]; then
+        echo "Linux"
+    else
+        echo $os
+    fi
+}
+
+# Function to get OS architecture: 32-bit, 64-bit, or ARM
+ get_architecture() {
+    local architecture=$(uname -m)
+    # if [[ $architecture == "x86_64" ]]; then
+    #     echo "x86_64" # 64-bit
+    # elif [[ $architecture == "arm"* ]]; then
+    #     echo $architecture # ARM
+    # else
+    #     echo "32-bit"
+    # fi
+    echo $architecture
+}
+
 # Function to detect package manager for Linux or macOS
 detect_package_manager() {
     # Check if running on macOS
@@ -45,73 +77,70 @@ detect_package_manager() {
     fi
 }
 
-# Function to trim leading and trailing spaces from a string
-trim() {
-    local var=$1
-    var=$(echo "$var" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-    echo -n "$var"
-}
-
 # Function to install applications using MacOS package manager
 install_with_macos_package_manager() {
     # Recieve the arguments passed to the function
-    local package_manager=$1
-    local oh_my_zsh=$2
-    local fzf=$3
-    local anaconda=$4
-    local tmux=$5
-    local r=$6
-    local nvim=$7
+    local os=$1
+    local architecture=$2
+    local package_manager=$3
+    local oh_my_zsh=$4
+    local fzf=$5
+    local anaconda=$6
+    local tmux=$7
+    local r=$8
+    local nvim=$9
 
     # Execute the script in utils with the arguments
-    source utils/macos_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+    source utils/macos_package_manager.sh "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
 
 # Function to install applications using Linux package managers
 install_with_linux_package_manager() {
     # Recieve the arguments passed to the function
-    local package_manager=$1
-    local oh_my_zsh=$2
-    local fzf=$3
-    local anaconda=$4
-    local tmux=$5
-    local r=$6
-    local nvim=$7
+    local os=$1
+    local architecture=$2
+    local package_manager=$3
+    local oh_my_zsh=$4
+    local fzf=$5
+    local anaconda=$6
+    local tmux=$7
+    local r=$8
+    local nvim=$9
 
     # Execute the script in utils with the arguments
-    source utils/linux_package_manager.sh "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+    source utils/linux_package_manager.sh "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
 
 # Function to install applications using the detected package manager
 install_applications() {
-    local package_manager=$1
-    local oh_my_zsh=$2
-    local fzf=$3
-    local anaconda=$4
-    local tmux=$5
-    local r=$6
-    local nvim=$7
-
-    echo "The package_manager is:  $package_manager..."
+    local os=$1
+    local architecture=$2
+    local package_manager=$3
+    local oh_my_zsh=$4
+    local fzf=$5
+    local anaconda=$6
+    local tmux=$7
+    local r=$8
+    local nvim=$9
 
     case $package_manager in
         "Homebrew")
-            install_with_macos_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_macos_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "apt-get")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_linux_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "DNF")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_linux_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "YUM")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_linux_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "Zypper")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_linux_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         "Pacman")
-            install_with_linux_package_manager "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+            install_with_linux_package_manager "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
             ;;
         *)
             echo "Unsupported package manager"
@@ -119,18 +148,6 @@ install_applications() {
     esac
 
 }
-
-# TODO: Function to get OS architecture: 32-bit, 64-bit, or ARM
-# get_architecture() {
-#    local architecture=$(uname -m)
-#    if [[ $architecture == "x86_64" ]]; then
-#        echo "64-bit"
-#    elif [[ $architecture == "arm"* ]]; then
-#        echo "ARM"
-#    else
-#        echo "32-bit"
-#    fi
-#}
 
 parse_arguments() {
     local oh_my_zsh=false
@@ -166,8 +183,20 @@ parse_arguments() {
         esac
     done
 
-    install_applications "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
+    install_applications "$os" "$architecture" "$package_manager" "$oh_my_zsh" "$fzf" "$anaconda" "$tmux" "$r" "$nvim"
 }
+
+# Assign OS to a variable
+os=$(get_os)
+
+# Trim leading and trailing spaces from the OS value
+os=$(trim "$os")
+
+# Assign architecture to a variable
+architecture=$(get_architecture)
+
+# Trim leading and trailing spaces from the architecture value
+architecture=$(trim "$architecture")
 
 # Assign package manager detector to a variable
 package_manager=$(detect_package_manager)
